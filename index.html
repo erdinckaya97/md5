@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>MD5 - Online generator md5 hash</title>
+        <title>Hash Generator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
@@ -11,20 +11,22 @@
     <body>
         <div class="container">
             <div class="row justify-content-md-center">
-                <h1 class="col text-center">function md5()</h1>
-            </div>
-            <div class="row justify-content-md-center">
-                <h2 class="col text-center ">Online generator md5 hash of a string</h2>
+                <h1 class="col text-center">Hash Generator</h1>
             </div>
             <main>
                 <form id="frm" class="form-horizontal">
                     <div class="form-group mb-2 row my-3">
-                        <div class="col input-group input-group-sm pl-4 pr-5 inputMd5">
-                            md5 (<input type="text" id="what" class="form-control mx-1" placeholder="place here your string to hash">)
+                        <div class="col input-group input-group-sm pl-4 pr-5">
+                            <select id="algorithm" class="form-control mx-1">
+                                <option value="MD5">MD5</option>
+                                <option value="SHA1">SHA1</option>
+                                <option value="SHA256">SHA256</option>
+                            </select>
+                            (<input type="text" id="what" class="form-control mx-1" placeholder="place here your string to hash">)
                         </div>
                     </div>
                     <div class="col input-group-sm text-center">
-                        <button type="submit" class="btn btn-info">hash darling, hash!</button>
+                        <button type="submit" class="btn btn-info">Generate Hash</button>
                     </div>
                     <div class="col-12 input-group input-group-sm text-center my-3">
                         <input type="text" id="hash" class="form-control mx-1 border-0 px-0 text-center" readonly="" placeholder="--">
@@ -36,11 +38,23 @@
         $('#frm').submit(function(e){
             e.preventDefault();
             let what = $('#what').val();
+            let algorithm = $('#algorithm').val();
             if (what == '') {
                 alert("Ooops! I don't see any text to encode!");
                 return;
             }
-            let hash = CryptoJS.MD5(what).toString();
+            let hash;
+            switch(algorithm) {
+                case 'MD5':
+                    hash = CryptoJS.MD5(what).toString();
+                    break;
+                case 'SHA1':
+                    hash = CryptoJS.SHA1(what).toString();
+                    break;
+                case 'SHA256':
+                    hash = CryptoJS.SHA256(what).toString();
+                    break;
+            }
             $('#hash').val(hash);
             $('#hash').focus();
             $('#hash').select();
