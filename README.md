@@ -1,2 +1,2 @@
 # md5
-A simple md5 generator website template javascript.
+A simple md5, sha1, sha256 generator website template javascript.
